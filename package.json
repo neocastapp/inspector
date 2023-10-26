@@ -1,0 +1,68 @@
+{
+  "name": "cardano-nft-indexers",
+  "version": "1.0.0",
+  "description": "Indexers for Cardano NFTs",
+  "scripts": {
+    "build": "tsc",
+    "start": "nodemon ./dist/index.js",
+    "dev": "nodemon --exec ts-node -- ./src/index.ts",
+    "prod": "npm run build && npm run start",
+    "clean": "rm -rf node_modules coverage dist .nyc_output",
+    "lint": "tslint -t stylish --project \"tsconfig.json\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlitzCraftHQ/cardano-nft-indexer.git"
+  },
+  "author": "Fabian Ferno",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BlitzCraftHQ/cardano-nft-indexer/issues"
+  },
+  "homepage": "https://github.com/BlitzCraftHQ/cardano-nft-indexer#readme",
+  "dependencies": {
+    "@urql/core": "3.1.1",
+    "ascii-art": "2.8.5",
+    "axios": "^0.27.2",
+    "colors": "1.4.0",
+    "crypto": "1.0.1",
+    "dotenv": "16.0.1", 
+    "graphql": "16.6.0",
+    "http-status": "^1.2.0", 
+    "lodash": "4.17.21",
+    "moment": "2.29.4",
+    "mongodb": "4.7.0",
+    "node-cron": "3.0.2",
+    "node-fetch": "3.3.0",
+    "piscina": "3.2.0",
+    "puppeteer": "14.4.1",
+    "puppeteer-extra": "3.3.4",
+    "rand-user-agent": "1.0.96",
+    "selenium-webdriver": "^4.1.2",
+    "single-line-log": "1.1.2",
+    "snoowrap": "1.23.0",   
+    "xml-js": "1.6.11",
+    "zeromq": "6.0.0-beta.6"
+  },
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "9.1.2",
+    "@types/dotenv": "^4.0.3",
+    "@types/node": "16.11.26",
+    "@types/node-fetch": "2.6.2",
+    "nodemon": "2.0.20",
+    "ts-node": "10.7.0",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "4.6.4"
+  },
+  "nodemonConfig": {
+    "ext": "js,json,ejs,jpg,png,gif,svg,css,html,ts,env",
+    "watch": [
+      "src",
+      "dist"
+    ]
+  },
+  "optionalDependencies": {
+    "fsevents": "2.3.2"
+  }
+}
