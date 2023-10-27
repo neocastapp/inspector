@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/BlitzCraftHQ/cardano-nft-indexer#readme",
   "dependencies": {
-    "@urql/core": "3.1.1",
     "ascii-art": "2.8.5",
     "axios": "^0.27.2",
     "colors": "1.4.0",

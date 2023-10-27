@@ -8,49 +8,28 @@ const client = new MongoClient(
     : "mongodb://localhost:27017"
 );
 
-const db = client.db(process.env.MONGO_DB_NAME || "nftconomy-cardano");
+const db = client.db(process.env.MONGO_DB_NAME || "neocast");
 
 async function ensureIndexes() {
   try {
-    // Add indexes for assets
-    await db.collection("assets").createIndex(
-      { policyId: 1, assetNameHex: 1 },
-      {
-        unique: true,
-      }
-    );
-    await db.collection("assets").createIndex({ assetNameHex: 1 });
-    await db.collection("assets").createIndex({ "collection.name": 1 });
-    await db.collection("assets").createIndex({ imgFormat: -1 });
-    await db.collection("assets").createIndex(
-      { assetFingerprint: 1 },
-      {
-        unique: true,
-      }
-    );
-    await db.collection("assets").createIndex({ likes: -1 });
-
-    // Add indexes for policies
-    await db.collection("policies").createIndex(
-      { name: 1 },
-      {
-        unique: true,
-      }
-    );
-    await db.collection("policies").createIndex({ volume: -1 });
-    await db.collection("policies").createIndex({ owners: -1 });
-    await db.collection("policies").createIndex({ nftsInCirculation: -1 });
-
-    // Add indexes for sell
-    await db.collection("sales").createIndex({ txHash: 1 }, { unique: true });
-
-    // Add indexes for listings
+    // Add index for contracts
     await db
-      .collection("listings")
-      .createIndex({ txHash: 1 }, { unique: true });
+      .collection("topics")
+      .createIndex({ topic_name: 1 }, { unique: true });
 
-    // Add indexes for delist
-    await db.collection("delists").createIndex({ txHash: 1 }, { unique: true });
+    await db.collection("notifications").createIndex(
+      {
+        eventname: 1,
+        timestamp: 1,
+        tx_id: 1,
+      },
+      {
+        unique: true,
+      }
+    );
+
+    await db.collection("notifications").createIndex({ contract: 1 });
+    await db.collection("notifications").createIndex({ topic_name: 1 });
   } catch (e) {
     console.log(e);
     console.log("Error creating indexes");
