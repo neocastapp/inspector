@@ -3,7 +3,6 @@ import axios from "axios";
 const log = require("single-line-log").stdout;
 
 import { db } from "./helpers/mongo-client";
-import { ensureIndexes } from "./helpers/mongo-client";
 import { Notification } from "./types";
 
 const ws: any = new Socket("wss://rpc.t5.n3.nspcc.ru:20331/ws");
@@ -51,19 +50,47 @@ class Inspector {
       if (parsedData.params) {
         parsedData.params.map((event: any) => {
           if (this.selected_events.includes(event.eventname)) {
-            console.log("Event:", event.eventname);
-            console.log("Data:", event);
+            console.log("Event caught:", event.eventname);
+
+            // Current timestamp
+            let eventTimestamp = new Date().getTime();
 
             // Store the notification
-            let notification: Notification = {
+            let notification: any = {
               topic_name: this.topic_name,
               ack: false,
+              eventname: event.eventname,
+              timestamp: eventTimestamp,
+              tx_id: event.container,
               ...event.state,
             };
             db.collection("notifications")
               .insertOne(notification)
-              .then(() => {
+              .then((data: any) => {
                 console.log("Stored notification:", notification);
+
+                let notificationId = data._id;
+                let topic_name = this.topic_name;
+
+                axios
+                  .request({
+                    method: "post",
+                    maxBodyLength: Infinity,
+                    url: "https://scout.neocast.xyz/v1/actions/trigger",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    data: {
+                      topic_name,
+                      notificationId,
+                    },
+                  })
+                  .then((response) => {
+                    console.log("Action response: ", response.data);
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
               });
           }
         });
