@@ -1,9 +1,9 @@
 import axios from "axios";
 const log = require("single-line-log").stdout;
 
-import { db } from "./helpers/mongo-client";
-import { ensureIndexes } from "./helpers/mongo-client";
-import { Notification } from "./types";
+import { db } from "../helpers/mongo-client";
+import { ensureIndexes } from "../helpers/mongo-client";
+import { Notification } from "../types";
 
 let contracts: any = ["0x1182db96dabd9ab27dc6c513e038169aacc7931a"]; // Testnet
 // let contracts: any = ["0xf15976ea5c020aaa12b9989aa9880e990eb5dcc9 "]; // Mainnet
