@@ -4,7 +4,7 @@
   "description": "Indexers for Cardano NFTs",
   "scripts": {
     "build": "tsc",
-    "start": "nodemon ./dist/index.js",
+    "start": "nodemon ./dist/inspector.js",
     "dev": "nodemon --exec ts-node -- ./src/index.ts",
     "prod": "npm run build && npm run start",
     "clean": "rm -rf node_modules coverage dist .nyc_output",
